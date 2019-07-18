@@ -119,13 +119,13 @@ var mouseX = void 0,
     mouseY = void 0,
     runtime = void 0,
     pLive = void 0;
-let currTheme = themes.fire;
+// let currTheme = themes.fire;
 // var currTheme = themes.flame;
-// let currTheme = themes.warpStar;
+let currTheme = themes.warpStar;
 // let currTheme = themes.smoke;
 
-let currEmitterTheme = singleBurstTheme;
-// let currEmitterTheme = warpStreamTheme;
+// let currEmitterTheme = singleBurstTheme;
+let currEmitterTheme = warpStreamTheme;
 // var currEmitterTheme = flameStreamTheme;
 
 var currEmmissionType = {
