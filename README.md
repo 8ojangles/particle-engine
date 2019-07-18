@@ -26,19 +26,19 @@ Installs all dependancies
 
 Once a successful installation has been made the following commands are available in a cmd/terminal at the project root:
 
-###`gulp build`
+### `gulp build`
 
 builds the project and runs tests
 
 
-###`gulp watch`
+### `gulp watch`
 
 Starts up a development server. open a browser and navigate to:
 `localhost:<defaultport>/test.html` to see the test page.
 i.e. [http://localhost:3000](http://localhost:3000)
 
 
-###`gulp tests` or `npm test`
+### `gulp tests` or `npm test`
 
 Run the test suite independantly
 
