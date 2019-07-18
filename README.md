@@ -1,6 +1,6 @@
-# Elucidat Javascript Coding Test - 8ojangles
+# Particle Engine
 
-This folder comprises of my completed test.
+This is an implimentation of a Particle engine written in Javascript and displaying in a 2d Canvas contexts.
 
 ## Contents
 
