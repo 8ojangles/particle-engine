@@ -77,7 +77,9 @@ var bufferClearRegion = {
     h: 0
 
     // emitter store
-};var emitterStore = [];
+};
+
+var emitterStore = [];
 // particle store
 var entityStore = [];
 // particle store meta data
@@ -119,14 +121,15 @@ var mouseX = void 0,
     mouseY = void 0,
     runtime = void 0,
     pLive = void 0;
+    
 // let currTheme = themes.fire;
-// var currTheme = themes.flame;
-let currTheme = themes.warpStar;
+var currTheme = themes.flame;
+// let currTheme = themes.warpStar;
 // let currTheme = themes.smoke;
 
 // let currEmitterTheme = singleBurstTheme;
-let currEmitterTheme = warpStreamTheme;
-// var currEmitterTheme = flameStreamTheme;
+// let currEmitterTheme = warpStreamTheme;
+var currEmitterTheme = flameStreamTheme;
 
 var currEmmissionType = {
     mouseClickEvent: true,
