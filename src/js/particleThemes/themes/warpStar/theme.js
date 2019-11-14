@@ -5,7 +5,9 @@ var rgba = coloring.rgba;
 
 // theme partials
 var renderFn = require('./renderFn.js').renderFn;
-
+var animationTracks = require('./animationTracks.js').animationTracks;
+var killConditions = require('./killConditions.js').killConditions;
+var customAttributes = require('./customAttributes.js').customAttributes;
 
 var warpStarTheme = {
     contextBlendingMode: 'lighter',
@@ -20,42 +22,9 @@ var warpStarTheme = {
     applyGlobalForces: false,
     colorProfiles: [{ r: 255, g: 255, b: 255, a: 0 }, { r: 255, g: 255, b: 255, a: 1 }],
     renderProfiles: [{ shape: 'Circle', colorProfileIdx: 0 }, { shape: 'Circle', colorProfileIdx: 1 }, { shape: 'Circle', colorProfileIdx: 2 }],
-    customAttributes: {
-        lensFlare: {
-            mightFlare: true,
-            willFlare: false,
-            angle: 1.50
-        }
-    },
-    animationTracks: [
-        {
-            animName: 'radiusGrow',
-            active: true,
-            param: 'r',
-            baseAmount: 'initR',
-            targetValuePath: 'tR',
-            duration: 'life',
-            easing: 'linearEase',
-            linkedAnim: false
-        },
-        {
-            animName: 'fadeIn',
-            active: true,
-            param: 'globalAlpha',
-            baseAmount: 'colorProfiles[0].a',
-            targetValuePath: 'colorProfiles[1].a',
-            duration: 'life',
-            easing: 'linearEase',
-            linkedAnim: false
-        }
-    ],
-    killConditions: {
-        boundaryCheck: true,
-        boundaryOffset: 400,
-        colorCheck: [],
-        perAttribute: []
-    },
-
+    customAttributes: customAttributes,
+    animationTracks: animationTracks,
+    killConditions: killConditions,
     renderParticle: renderFn
 };
 
