@@ -1,6 +1,9 @@
 var mathUtils = require('./../../../mathUtils.js').mathUtils;
 var coloring = require('./../../../colorUtils.js').colorUtils;
 var rgba = coloring.rgba;
+let createWarpStarImage = require('./../../../createWarpStarImage.js');
+
+let warpStarImage = createWarpStarImage();
 
 var warpStarTheme = {
     contextBlendingMode: 'lighter',
@@ -10,8 +13,8 @@ var warpStarTheme = {
     // velAcceleration: 1.05,
     velAcceleration: { min: 1.01, max: 1.2 },
     magDecay: 1,
-    radius: { min: 0.5, max: 1.5 },
-    targetRadius: { min: 1.5, max: 1.65 },
+    radius: { min: 0.5, max: 3 },
+    targetRadius: { min: 4, max: 10 },
     applyGlobalForces: false,
     colorProfiles: [{ r: 255, g: 255, b: 255, a: 0 }, { r: 255, g: 255, b: 255, a: 1 }],
     renderProfiles: [{ shape: 'Circle', colorProfileIdx: 0 }, { shape: 'Circle', colorProfileIdx: 1 }, { shape: 'Circle', colorProfileIdx: 2 }],
@@ -47,36 +50,50 @@ var warpStarTheme = {
         colorCheck: [],
         perAttribute: []
     },
+
     renderParticle: function renderParticle(x, y, r, colorData, context) {
         var p = this;
 
         function angle(originX, originY, targetX, targetY) {
-                    var dx = originX - targetX;
-                    var dy = originY - targetY;
-                    var theta = Math.atan2(-dy, -dx);
-                    return theta;
+            var dx = originX - targetX;
+            var dy = originY - targetY;
+            var theta = Math.atan2(-dy, -dx);
+            return theta;
         }
 
-        var stretchVal = mathUtils.map(p.relativeMagnitude, 0, 100, 1, 10);
+        var stretchVal = mathUtils.map(p.relativeMagnitude, 0, 100, 1, 40);
         var chromeVal = mathUtils.map(stretchVal, 0, 10, 1, 4);
-        context.save();
+        
+        // context.save();
         context.translate(x, y);
         context.rotate(p.angle);
 
-        if (chromeVal < 1) {
-                    context.fillStyle = "rgba( 255, 255, 255, 1 )";
-                    context.fillEllipse(0, 0, r * stretchVal, r, context);
-        } else {
-                    // fake chromatic abberation ( rainbowing lens effect due to light refraction
-                    context.fillStyle = "rgba( 255, 0, 0, " + colorData.a + " )";
-                    context.fillEllipse(chromeVal * -1, 0, r * stretchVal, r, context);
-                    context.fillStyle = "rgba( 0, 255, 0, " + colorData.a + " )";
-                    context.fillEllipse(0, 0, r * stretchVal, r, context);
-                    context.fillStyle = "rgba( 0, 0, 255, " + colorData.a + " )";
-                    context.fillEllipse(0, chromeVal, r * stretchVal, r, context);
-        }
+        let renderProps = warpStarImage.renderProps;
 
-        context.restore();
+        context.drawImage(
+            warpStarImage,
+            0, 0, renderProps.src.w, renderProps.src.h,
+            -( ( r * stretchVal ) / 2 ), -( r / 2 ), r * stretchVal, r
+        );
+
+
+        // if (chromeVal < 1) {
+        //     context.fillStyle = "rgba( 255, 255, 255, 1 )";
+        //     context.fillEllipse(0, 0, r * stretchVal, r, context);
+        // } else {
+        //     // fake chromatic abberation ( rainbowing lens effect due to light refraction
+        //     context.fillStyle = "rgba( 255, 0, 0, " + colorData.a + " )";
+        //     context.fillEllipse(chromeVal * -1, 0, r * stretchVal, r, context);
+        //     context.fillStyle = "rgba( 0, 255, 0, " + colorData.a + " )";
+        //     context.fillEllipse(0, 0, r * stretchVal, r, context);
+        //     context.fillStyle = "rgba( 0, 0, 255, " + colorData.a + " )";
+        //     context.fillEllipse(0, chromeVal, r * stretchVal, r, context);
+        // }
+
+        context.rotate( -p.angle );
+        context.translate( -x, -y );
+
+        // context.restore();
 
         if (p.customAttributes.lensFlare.willFlare) {
 

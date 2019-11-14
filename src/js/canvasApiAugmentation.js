@@ -12,8 +12,8 @@ var canvasDrawingApi = CanvasRenderingContext2D.prototype;
 * @param {number} r - radius of circle.
 */
 canvasDrawingApi.circle = function (x, y, r, context) {
-	context.beginPath();
-	context.arc(x, y, r, 0, Math.PI * 2, true);
+	this.beginPath();
+	this.arc(x, y, r, 0, Math.PI * 2, true);
 };
 
 /**
@@ -24,9 +24,9 @@ canvasDrawingApi.circle = function (x, y, r, context) {
 * @param {number} r - radius of circle.
 */
 canvasDrawingApi.fillCircle = function (x, y, r, context) {
-	context.circle(x, y, r, context);
-	context.fill();
-	context.beginPath();
+	this.circle(x, y, r, context);
+	this.fill();
+	this.beginPath();
 };
 
 /**
