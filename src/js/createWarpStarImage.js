@@ -34,6 +34,19 @@ function createWarpStarImage() {
 	ctx.fillStyle = gBlue;
 	ctx.fillCircle( cH + cSO, cV, cSR, c );
 
+
+	ctx.translate( cH, cV );
+	ctx.scale( 2, 0.5 );
+	let gWhite = ctx.createRadialGradient( 0, 0, 0, 0, 0, cSR );
+	gWhite.addColorStop( 0, 'rgba( 255, 255, 255, 0.5 )' );
+	gWhite.addColorStop( 1, 'rgba( 255, 255, 255, 0 )' );
+
+	ctx.fillStyle = gWhite;
+	ctx.fillCircle( 0, 0, cSR, c );
+
+	ctx.scale( 0.5, 2 );
+	ctx.translate( -cH, -cV );
+
 	c.renderProps = {
 		src: {
 			x: 0, y: 0, w: c.width, h: c.height
@@ -42,7 +55,7 @@ function createWarpStarImage() {
 			x: -cH, y: -cV
 		}
 	}
-	console.log( 'c: ', c.renderProps );
+	// console.log( 'c: ', c.renderProps );
 
 	return c;
 

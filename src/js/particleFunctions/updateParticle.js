@@ -1,5 +1,6 @@
 var easing = require('./../easing.js').easingEquations;
 var environment = require('./../environment.js').environment;
+var trig = require('./../trigonomicUtils.js').trigonomicUtils;
 var physics = environment.forces;
 
 var updateParticle = function updateParticle(emitterArr) {
@@ -11,6 +12,11 @@ var updateParticle = function updateParticle(emitterArr) {
     // p.y += p.yVel * p.magnitudeDecay;
     p.x += p.xVel;
     p.y += p.yVel;
+
+    p.vel = trig.dist( p.x, p.y, p.xOld, p.yOld );
+
+    p.xOld = p.x;
+    p.yOld = p.y;
 
     p.xVel *= p.vAcc;
     p.yVel *= p.vAcc;
@@ -97,9 +103,9 @@ var updateParticle = function updateParticle(emitterArr) {
         }
     }
 
-    if (p.idx == 9987) {}
-    // console.log( 'thisParticleAlpha',  p.color4Data.a );
-
+    // if (p.idx == 9987) {
+    //     console.log( 'p.vel',  p.vel );
+    // }
 
     // life taketh away
     p.currLife--;

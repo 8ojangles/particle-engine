@@ -1,6 +1,6 @@
 var fireTheme = require('./themes/fire/theme.js').fireTheme;
 var resetTheme = require('./themes/reset/resetTheme.js').resetTheme;
-var warpStarTheme = require('./themes/warpStar/warpStarTheme.js').warpStarTheme;
+var warpStarTheme = require('./themes/warpStar/theme.js').warpStarTheme;
 var flameTheme = require('./themes/flame/flameTheme.js').flameTheme;
 var smokeTheme = require('./themes/smoke/smokeTheme.js').smokeTheme;
 
