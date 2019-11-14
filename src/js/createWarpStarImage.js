@@ -7,7 +7,7 @@ c.height = 100;
 cH = c.width / 2;
 cV = c.height / 2;
 let cSR = c.height / 2;
-let cSO = cH / 2;
+let cSO = cH / 4;
 
 function createWarpStarImage() {
 

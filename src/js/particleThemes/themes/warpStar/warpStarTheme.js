@@ -11,10 +11,10 @@ var warpStarTheme = {
     life: { min: 50, max: 100 },
     angle: { min: 0, max: 2 },
     // velAcceleration: 1.05,
-    velAcceleration: { min: 1.01, max: 1.2 },
+    velAcceleration: { min: 1.01, max: 1.5 },
     magDecay: 1,
-    radius: { min: 0.5, max: 3 },
-    targetRadius: { min: 4, max: 10 },
+    radius: { min: 0.2, max: 1 },
+    targetRadius: { min: 4, max: 30 },
     applyGlobalForces: false,
     colorProfiles: [{ r: 255, g: 255, b: 255, a: 0 }, { r: 255, g: 255, b: 255, a: 1 }],
     renderProfiles: [{ shape: 'Circle', colorProfileIdx: 0 }, { shape: 'Circle', colorProfileIdx: 1 }, { shape: 'Circle', colorProfileIdx: 2 }],
@@ -37,7 +37,7 @@ var warpStarTheme = {
     }, {
         animName: 'fadeIn',
         active: true,
-        param: 'color4Data.a',
+        param: 'globalAlpha',
         baseAmount: 'colorProfiles[0].a',
         targetValuePath: 'colorProfiles[1].a',
         duration: 'life',
@@ -62,20 +62,21 @@ var warpStarTheme = {
         }
 
         var stretchVal = mathUtils.map(p.relativeMagnitude, 0, 100, 1, 40);
-        var chromeVal = mathUtils.map(stretchVal, 0, 10, 1, 4);
+        // var chromeVal = mathUtils.map(stretchVal, 0, 10, 1, 4);
         
         // context.save();
         context.translate(x, y);
         context.rotate(p.angle);
-
+        context.globalAlpha = p.globalAlpha;
         let renderProps = warpStarImage.renderProps;
 
         context.drawImage(
             warpStarImage,
             0, 0, renderProps.src.w, renderProps.src.h,
-            -( ( r * stretchVal ) / 2 ), -( r / 2 ), r * stretchVal, r
+            -( ( r * stretchVal ) / 2 ), -( 4 / 2 ), r * stretchVal, 4
         );
 
+        context.globalAlpha = 1;
 
         // if (chromeVal < 1) {
         //     context.fillStyle = "rgba( 255, 255, 255, 1 )";
