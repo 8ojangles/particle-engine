@@ -44,7 +44,7 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
     var tempCustom = {
         lensFlare: {
             mightFlare: true,
-            willFlare: themed.customAttributes.lensFlare.mightFlare === true && willFlareTemp < 1 ? true : false,
+            willFlare: themed.customAttributes.lensFlare.mightFlare === true && willFlareTemp < 10 ? true : false,
             angle: 0.30
         }
 

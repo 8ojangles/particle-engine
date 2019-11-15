@@ -58,9 +58,9 @@ var updateParticle = function updateParticle(emitterArr) {
 
                     var particleEvents = p.events;
 
-                    for (var i = particleEvents.length - 1; i >= 0; i--) {
+                    for (var j = particleEvents.length - 1; j >= 0; j--) {
 
-                        var thisParticleEvent = p.events[i];
+                        var thisParticleEvent = p.events[ j ];
                         if (thisParticleEvent.eventType = t.linkedEvent) {
                             if (t.linkedEvent === 'emit') {
 
@@ -69,9 +69,9 @@ var updateParticle = function updateParticle(emitterArr) {
                                 if (typeof thisParticleEventParams.emitter !== 'undefined') {
                                     thisParticleEventParams.emitter.triggerEmitter({ x: p.x, y: p.y });
                                 } else {
-                                    for (var j = emitterArr.length - 1; j >= 0; j--) {
-                                        if (emitterArr[j].name === thisParticleEventParams.emitterName) {
-                                            thisParticleEventParams.emitter = emitterArr[j];
+                                    for (var k = emitterArr.length - 1; k >= 0; k--) {
+                                        if (emitterArr[ k ].name === thisParticleEventParams.emitterName) {
+                                            thisParticleEventParams.emitter = emitterArr[ k ];
                                             thisParticleEventParams.emitter.triggerEmitter({ x: p.x, y: p.y });
                                         }
                                     }
@@ -87,9 +87,9 @@ var updateParticle = function updateParticle(emitterArr) {
 
                 if (t.linkedAnim !== false) {
 
-                    for (var j = animTracksLen - 1; j >= 0; j--) {
-                        if (animTracks[j].animName === t.linkedAnim) {
-                            animTracks[j].active = true;
+                    for (var l = animTracksLen - 1; l >= 0; l--) {
+                        if (animTracks[ l ].animName === t.linkedAnim) {
+                            animTracks[ l ].active = true;
                         }
                     }
                 }

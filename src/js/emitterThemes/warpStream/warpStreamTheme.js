@@ -18,8 +18,8 @@
     emission: {
 
       rate: {
-        min: 10,
-        max: 20,
+        min: 5,
+        max: 12,
 
         decay: {
           rate: 0,

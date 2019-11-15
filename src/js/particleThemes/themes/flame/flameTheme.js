@@ -7,13 +7,13 @@ var rgba = coloring.rgba;
 var flameTheme = {
     contextBlendingMode: 'lighter',
     active: 1,
-    life: { min: 20, max: 40 },
+    life: { min: 30, max: 60 },
     angle: { min: 1.45, max: 1.55 },
     // mag: { min: 8, max: 13 },
     // velAcceleration: 1.05,
     velAcceleration: { min: 1, max: 1 },
     magDecay: 1.5,
-    radius: { min: 70, max: 130 },
+    radius: { min: 100, max: 180 },
     targetRadius: { min: 1, max: 2 },
     applyGlobalForces: false,
     colorProfiles: [{ r: 255, g: 255, b: 255, a: 0.5 }, { r: 255, g: 0, b: 0, a: 1 }],
@@ -83,7 +83,9 @@ var flameTheme = {
         duration: 0.3,
         easing: 'linearEase',
         linkedAnim: false,
-        linkedEvent: 'emit'
+        // linkedEvent: 'emit',
+        linkedEvent: false
+
     }],
 
     events: [{

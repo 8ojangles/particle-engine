@@ -18,8 +18,8 @@ var flameStreamTheme = {
 	emission: {
 
 		rate: {
-			min: 10,
-			max: 20,
+			min: 30,
+			max: 60,
 
 			decay: {
 				rate: 0,

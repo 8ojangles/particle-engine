@@ -16,6 +16,13 @@ var halfByPi = 180 / Math.PI;
 */
 var trigonomicUtils = (_trigonomicUtils = {
 
+	angle: function(originX, originY, targetX, targetY) {
+        var dx = originX - targetX;
+        var dy = originY - targetY;
+        var theta = Math.atan2(-dy, -dx);
+        return theta;
+    },
+
 	/**
  * @description calculate distance between 2 vector coordinates.
  * @param {number} x1 - X coordinate of vector 1.
