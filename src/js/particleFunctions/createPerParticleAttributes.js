@@ -6,6 +6,7 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
     // let themed = perParticleOpts.theme || themes.reset;
 
     var themed = perParticleOpts || themes.reset;
+    console.log( 'themed: ', themed );
     var emitThemed = emissionOpts || false;
     var life = mathUtils.randomInteger(themed.life.min, themed.life.max);
     // use bitwise to check for odd/even life vals. Make even to help with anims that are fraction of life (frames)
@@ -28,6 +29,39 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
     var initR = mathUtils.random(themed.radius.min, themed.radius.max);
     var targetRadius = mathUtils.random(themed.targetRadius.min, themed.targetRadius.max);
     var acceleration = mathUtils.random(themed.velAcceleration.min, themed.velAcceleration.max);
+
+    let tempStore = {};
+    // console.log( 'themed.linkCreationAttributes: ', themed.linkCreationAttributes );
+    if ( themed.linkCreationAttributes && themed.linkCreationAttributes.length > 0 ) {
+        // console.log( 'themed.linkCreationAttributes true: ');
+        // console.log( 'themed.linkCreationAttributes: ', themed.linkCreationAttributes );
+        let linkCreationAttributesLen = themed.linkCreationAttributes.length;
+        for ( let i = linkCreationAttributesLen - 1; i >= 0; i-- ) {
+
+            let srcAttr = themed.linkCreationAttributes[ i ].src;
+            let targetAttr = themed.linkCreationAttributes[ i ].target;
+            let attr = themed.linkCreationAttributes[ i ].attr;
+            // console.log( 'srcAttr: ', srcAttr );
+            // console.log( 'targetAttr: ', targetAttr );
+            // console.log( 'attr: ', attr );
+
+            tempStore[ attr ] = {
+                value: mathUtils.map(
+                    acceleration,
+                    themed[ srcAttr ].min, themed[ srcAttr ].max,
+                    themed[ targetAttr ].min, themed[ targetAttr ].max
+                      )
+            }
+
+        }
+
+    } else {
+        // console.log( 'themed.linkCreationAttributes false: ');
+    }
+
+    
+
+
     var velocities = trig.calculateVelocities(x, y, direction, impulse);
 
     var initColor = themed.colorProfiles[0];
@@ -49,8 +83,6 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
         }
 
         // let customAttributes = themed.customAttributes;
-
-
     };
 
     var ppa = {

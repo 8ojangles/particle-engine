@@ -19,6 +19,7 @@ var warpStarTheme = {
     magDecay: 1,
     radius: { min: 0.2, max: 0.6 },
     targetRadius: { min: 2, max: 6 },
+    linkCreationAttributes: [{ src: 'velAcceleration', target: 'targetRadius', attr: 'tR' }], 
     applyGlobalForces: false,
     colorProfiles: [{ r: 255, g: 255, b: 255, a: 0 }, { r: 255, g: 255, b: 255, a: 1 }],
     renderProfiles: [{ shape: 'Circle', colorProfileIdx: 0 }, { shape: 'Circle', colorProfileIdx: 1 }, { shape: 'Circle', colorProfileIdx: 2 }],
