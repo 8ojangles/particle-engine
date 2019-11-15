@@ -77,7 +77,9 @@ var bufferClearRegion = {
     h: 0
 
     // emitter store
-};var emitterStore = [];
+};
+
+var emitterStore = [];
 // particle store
 var entityStore = [];
 // particle store meta data
@@ -119,20 +121,23 @@ var mouseX = void 0,
     mouseY = void 0,
     runtime = void 0,
     pLive = void 0;
+    
 // let currTheme = themes.fire;
-var currTheme = themes.flame;
-// let currTheme = themes.warpStar;
+// var currTheme = themes.flame;
+let currTheme = themes.warpStar;
 // let currTheme = themes.smoke;
 
 // let currEmitterTheme = singleBurstTheme;
-// let currEmitterTheme = warpStreamTheme;
-var currEmitterTheme = flameStreamTheme;
+let currEmitterTheme = warpStreamTheme;
+// var currEmitterTheme = flameStreamTheme;
 
 var currEmmissionType = {
-    mouseClickEvent: true,
+    mouseClickEvent: false,
     randomBurst: false,
-    steadyStream: false
+    steadyStream: true
 };
+
+let streamEmmisionLimiter = false;
 
 // canvas click handler
 function registerMouseClickEmmision() {
@@ -162,6 +167,24 @@ function registerMouseClickEmmision() {
 if (currEmmissionType.mouseClickEvent) {
     registerMouseClickEmmision();
 }
+
+if (currEmmissionType.steadyStream) {
+    var testEmitter = new EmitterEntity('testEmitter', currEmitterTheme, currTheme, emitEntities);
+    emitterStore.push(testEmitter);
+    testEmitter.triggerEmitter({
+        x: canvasConfig.centerH,
+        y: canvasConfig.centerV
+    });
+
+    if (animation.state !== true) {
+        animation.state = true;
+        update();
+    }
+}
+
+
+
+
 
 var smokeEmitter = new EmitterEntity('smokeEmitter', smokeStreamTheme, themes.smoke, emitEntities);
 emitterStore.push(smokeEmitter);
@@ -256,6 +279,7 @@ function updateEmitterStoreMembers() {
 
 // runtime fN members
 function displayDebugging() {
+    ctx.globalAlpha = 1;
     debug.debugOutput(canvas, ctx, 'Animation Counter: ', counter, 0);
     debug.debugOutput(canvas, ctx, 'Particle Pool: ', entityStore.length, 1);
     debug.debugOutput(canvas, ctx, 'Live Entities: ', runtimeConfig.liveEntityCount, 2, { min: entityStore.length, max: 0 });
@@ -263,6 +287,19 @@ function displayDebugging() {
 }
 
 function updateCycle() {
+
+    // if ( currEmmissionType.steadyStream === true ) {
+    //     if ( streamEmmisionLimiter === false ) {
+    //         testEmitter.triggerEmitter({
+    //             x: canvasConfig.centerH,
+    //             y: canvasConfig.centerV
+    //         });
+    //         streamEmmisionLimiter = true;
+    //         animation.state = true;
+    //     }
+    // }
+
+
     // rendering
     particleArrFn.renderParticleArr(ctx, entityStore, animation);
 
