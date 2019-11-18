@@ -17,44 +17,42 @@ var lastCalledTime = debugConfig.lastCalledTime;
 var environment = require('./environment.js').environment;
 var physics = environment.forces;
 var runtimeEngine = environment.runtimeEngine;
-var themes = require('./particleThemes/themes.js').themes;
 
+// Particle engine machinery
+var EmitterEntity = require('./EmitterEntity.js').EmitterEntity;
+var EmitterStoreFn = require('./emitterStore.js').EmitterStoreFn;
+var particleFn = require('./particleFn.js').particleFn;
+var particleArrFn = require('./particleArrFn.js').particleArrFn;
+
+// Emitter themes
 var singleBurstTheme = require('./emitterThemes/singleBurstTheme/singleBurstTheme.js').singleBurstTheme;
 var baseEmitterTheme = require('./emitterThemes/baseEmitter/baseEmitterTheme.js').baseEmitterTheme;
 var warpStreamTheme = require('./emitterThemes/warpStream/warpStreamTheme.js').warpStreamTheme;
 var flameStreamTheme = require('./emitterThemes/flameStream/flameStreamTheme.js').flameStreamTheme;
 var smokeStreamTheme = require('./emitterThemes/smokeStream/smokeStreamTheme.js').smokeStreamTheme;
 
-var EmitterEntity = require('./EmitterEntity.js').EmitterEntity;
-var EmitterStoreFn = require('./emitterStore.js').EmitterStoreFn;
-var particleFn = require('./particleFn.js').particleFn;
-var particleArrFn = require('./particleArrFn.js').particleArrFn;
+// particle themes
+var themes = require('./particleThemes/themes.js').themes;
 
-// double buffer canvas (experiment)
-// let canvas = document.createElement('canvas');
-// let ctx = canvas.getContext("2d");
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
 
-// let blitCanvas = document.querySelector("#test-base");
-// let blitCtx = blitCanvas.getContext("2d");
-
-// blitCanvas.width = window.innerWidth;
-// blitCanvas.height = window.innerHeight;
-
-// standard canvas rendering
-// canvas housekeeping
-var canvas = document.querySelector("#test-base");
-// let ctx = canvas.getContext("2d", { alpha: false });
-var ctx = canvas.getContext("2d");
 // cache canvas w/h
-var canW = window.innerWidth;
-var canH = window.innerHeight;
-// set canvas to full-screen
+let canW = window.innerWidth;
+let canH = window.innerHeight;
+let canvasCentreH = canW / 2;
+let canvasCentreV = canH / 2;
+
+let blitCanvas = document.createElement('canvas');
+let blitCtx = blitCanvas.getContext("2d");
+blitCanvas.id = 'blitterCanvas';
+blitCanvas.width = canW;
+blitCanvas.height = canH;
+// blitCtx.filter = "blur(1px)";
+
+let canvas = document.querySelector("#test-base");
+let ctx = canvas.getContext("2d");
 canvas.width = canW;
 canvas.height = canH;
-var canvasCentreH = canW / 2;
-var canvasCentreV = canH / 2;
+
 
 var canvasConfig = {
     width: canW,
@@ -183,9 +181,6 @@ if (currEmmissionType.steadyStream) {
 }
 
 
-
-
-
 var smokeEmitter = new EmitterEntity('smokeEmitter', smokeStreamTheme, themes.smoke, emitEntities);
 emitterStore.push(smokeEmitter);
 
@@ -235,7 +230,7 @@ function createLiveParticle(thisX, thisY, idx, emissionOpts, particleOpts) {
 
     var newParticle = {};
     newParticle.idx = idx;
-    setParticleAttributes(newParticle, particleFn.createPerParticleAttributes(thisX, thisY, emissionOpts, particleOpts));
+    setParticleAttributes( newParticle, particleFn.createPerParticleAttributes( thisX, thisY, emissionOpts, particleOpts ) );
     return newParticle;
 }
 
@@ -252,37 +247,37 @@ function emitEntities(x, y, count, emissionOptions, particleOptions) {
 
     // console.log( "emmiting a total of: '%d' particles", count );
     runtimeConfig.liveEntityCount += count;
-    for (var _i = count - 1; _i >= 0; _i--) {
+    for ( let i = count - 1; i >= 0; i-- ) {
 
         if (entityPool.getSize() > 0) {
-            entityStore[entityPool.getTailNode().getData()].reincarnate(x, y, emissionOptions, particleOptions);
+            entityStore[ entityPool.getTailNode().getData() ].reincarnate( x, y, emissionOptions, particleOptions );
             addedFromPool++;
             entityPool.remove();
         } else {
-            entityStore.push(createLiveParticle(x, y, entityStoreLen, emissionOptions, particleOptions));
+            entityStore.push( createLiveParticle( x, y, entityStoreLen, emissionOptions, particleOptions ) );
             entityPool.insert('' + entityStoreLen);
             addedNew++;
             entityStoreLen++;
         }
     }
     // console.log( "addedFromPool: '%d', addedNew: '%d'", addedFromPool, addedNew );
-    // console.log( 'addedNew: ', addedNew );
+    // console.warn( 'addedNew: ', addedNew );
 }
 
 function updateEmitterStoreMembers() {
 
-    for (var i = emitterStore.length - 1; i >= 0; i--) {
-        emitterStore[i].updateEmitter();
+    for ( let i = emitterStore.length - 1; i >= 0; i-- ) {
+        emitterStore[ i ].updateEmitter();
         // emitterStore[i].renderEmitter( ctx );
     }
 }
 
 // runtime fN members
 function displayDebugging() {
-    ctx.globalAlpha = 1;
-    debug.debugOutput(canvas, ctx, 'Animation Counter: ', counter, 0);
-    debug.debugOutput(canvas, ctx, 'Particle Pool: ', entityStore.length, 1);
-    debug.debugOutput(canvas, ctx, 'Live Entities: ', runtimeConfig.liveEntityCount, 2, { min: entityStore.length, max: 0 });
+    // ctx.globalAlpha = 1;
+    // debug.debugOutput(canvas, ctx, 'Animation Counter: ', counter, 0);
+    // debug.debugOutput(canvas, ctx, 'Particle Pool: ', entityStore.length, 1);
+    // debug.debugOutput(canvas, ctx, 'Live Entities: ', runtimeConfig.liveEntityCount, 2, { min: entityStore.length, max: 0 });
     debug.debugOutput(canvas, ctx, 'FPS: ', Math.round(debug.calculateFps()), 3, { min: 0, max: 60 });
 }
 
@@ -301,23 +296,27 @@ function updateCycle() {
 
 
     // rendering
-    particleArrFn.renderParticleArr(ctx, entityStore, animation);
-
+    
+    particleArrFn.renderParticleArr( blitCtx, entityStore, animation );
+    // blitCtx.filter = "blur(0px)";
     // blit to onscreen
-    // blitCtx.drawImage( canvas, 0, 0 );
+    ctx.drawImage( blitCanvas, 0, 0 );
 
     // updating
-    particleArrFn.updateParticleArr(ctx, entityStore, entityPool, animation, canvasConfig, runtimeConfig, emitterStore);
+    particleArrFn.updateParticleArr( entityStore, entityPool, animation, canvasConfig, runtimeConfig, emitterStore );
 
     updateEmitterStoreMembers();
+
 }
 
-function clearCanvas(ctx) {
-    // cleaning
-    ctx.clearRect(0, 0, canW, canH);
-    // ctx.clearRect( bufferClearRegion.x, bufferClearRegion.y, bufferClearRegion.w, bufferClearRegion.h );
+function clearCanvas( ctx ) {
 
-    // blitCtx.clearRect( 0, 0, canW, canH );
+    // cleaning
+    ctx.fillStyle = 'black';
+    ctx.fillRect( 0, 0, canW, canH );
+    // ctx.clearRect( 0, 0, canW, canH );
+    // ctx.clearRect( bufferClearRegion.x, bufferClearRegion.y, bufferClearRegion.w, bufferClearRegion.h );
+    blitCtx.clearRect( 0, 0, canW, canH );
 
 
     // ctx.fillStyle = 'rgba( 0, 0, 0, 0.1 )';
@@ -336,12 +335,12 @@ function update() {
     runtime = undefined;
 
     // clean canvas
-    clearCanvas(ctx);
+    clearCanvas( ctx );
 
     // blending
-    // if ( ctx.globalCompositeOperation != currTheme.contextBlendingMode ) {
-    //     ctx.globalCompositeOperation = currTheme.contextBlendingMode;
-    // }
+    if ( blitCtx.globalCompositeOperation != currTheme.contextBlendingMode ) {
+        blitCtx.globalCompositeOperation = currTheme.contextBlendingMode;
+    }
 
     // updates
     updateCycle();

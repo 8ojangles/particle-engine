@@ -29,3 +29,15 @@ body {
 	justify-content: center;
 	background-color: black;
 }
+
+.warpStarImageCanvas {
+	display: block;
+	position: absolute;
+	background-color: black;
+	border: 1px solid #333;
+	width: auto;
+	height: auto;
+	z-index: 1000;
+	bottom: 0;
+	right: 0;
+}

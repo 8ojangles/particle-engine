@@ -47,6 +47,10 @@ function createAnimationTracks( arr, ppa ) {
 };
 
 
+function linkCreationAttributes( item ) {
+
+}
+
 
 var createPerParticleAttributes = function createPerParticleAttributes(x, y, emissionOpts, perParticleOpts) {
     // let themed = perParticleOpts.theme || themes.reset;
@@ -68,7 +72,7 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
     var impulse = imp.pow > 0 ? imp.pow : rand( imp.min, imp.max);
 
     // set new particle origin dependent on the radial displacement
-    if (emission.radialDisplacement > 0) {
+    if ( emission.radialDisplacement > 0 ) {
         var newCoords = trig.radialDistribution(x, y, emission.radialDisplacement + rand( emission.radialDisplacementOffset * -1, emission.radialDisplacementOffset), direction);
 
         x = newCoords.x;
@@ -82,6 +86,7 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
 
     var initR = rand( themed.radius.min, themed.radius.max );
     var acceleration = rand( themed.velAcceleration.min, themed.velAcceleration.max );
+    this.acceleration = acceleration;
     var targetRadius = rand( themed.targetRadius.min, themed.targetRadius.max) ;
 
     let tempStore = {};
@@ -100,7 +105,7 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
 
             tempStore[ attr ] = {
                 value: mathUtils.map(
-                    acceleration,
+                    this[ thisLink.srcValue ],
                     themed[ srcAttr ].min, themed[ srcAttr ].max,
                     themed[ targetAttr ].min, themed[ targetAttr ].max
                       )

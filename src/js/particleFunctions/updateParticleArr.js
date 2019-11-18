@@ -1,6 +1,6 @@
 let particleFn = require('./../particleFn.js').particleFn;
 
-let updateParticleArr = function updateParticleArr(context, storeArr, poolArr, animation, canvasConfig, entityCounter, emitterStore) {
+let updateParticleArr = function updateParticleArr( storeArr, poolArr, animation, canvasConfig, entityCounter, emitterStore) {
     // loop housekeeping
 
     let arrLen = storeArr.length - 1;
@@ -9,6 +9,7 @@ let updateParticleArr = function updateParticleArr(context, storeArr, poolArr, a
         p.isAlive != 0 ? particleFn.checkParticleKillConditions(p, canvasConfig.width, canvasConfig.height) ? p.kill(poolArr, p.idx, entityCounter) : p.update(emitterStore) : false;
     } // end For loop
     // liveEntityCount === 0 ? ( console.log( 'liveEntityCount === 0 stop anim' ), animation.state = false ) : 0;
+
 };
 
 module.exports.updateParticleArr = updateParticleArr;

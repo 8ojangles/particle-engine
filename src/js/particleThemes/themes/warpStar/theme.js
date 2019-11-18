@@ -13,15 +13,16 @@ var renderProfiles = require('./renderProfiles.js').renderProfiles;
 var colorProfiles = require('./colorProfiles.js').colorProfiles;
 
 var warpStarTheme = {
-    contextBlendingMode: 'lighter',
+    contextBlendingMode: 'source-over',
     active: 1,
     life: { min: 50, max: 100 },
     angle: { min: 0, max: 2 },
     // velAcceleration: 1.05,
-    velAcceleration: { min: 1.001, max: 1.25 },
+    velAcceleration: { min: 1.001, max: 1.15 },
     magDecay: 1,
-    radius: { min: 0.2, max: 0.6 },
-    targetRadius: { min: 2, max: 6 },
+    radius: { min: 1, max: 2 },
+    targetRadius: { min: 4, max: 20 },
+    
     linkCreationAttributes: linkCreationAttributes, 
     applyGlobalForces: false,
     colorProfiles: colorProfiles,

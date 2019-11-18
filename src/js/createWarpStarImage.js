@@ -2,11 +2,16 @@ var drawing = require('./canvasApiAugmentation.js').canvasDrawingApi;
 
 let c = document.createElement( 'canvas' );
 let ctx = c.getContext( '2d' );
-c.width = 200;
-c.height = 100;
+
+let blurBuffer = 5;
+
+c.width = 200 + ( blurBuffer * 2 );
+c.height = 100 + ( blurBuffer * 2 );
+
+
 cH = c.width / 2;
 cV = c.height / 2;
-let cSR = c.height / 2;
+let cSR = ( c.height - ( blurBuffer * 2 ) ) / 2;
 let cSO = cH / 4;
 
 function createWarpStarImage() {
@@ -24,6 +29,8 @@ function createWarpStarImage() {
 	gBlue.addColorStop( 1, 'rgba( 0, 0, 255, 0 )' );
 
 	ctx.globalCompositeOperation = 'lighter';
+
+	ctx.filter = "blur( 3px )";
 
 	ctx.fillStyle = gRed;
 	ctx.fillCircle( cH - cSO, cV, cSR, c );
@@ -56,6 +63,8 @@ function createWarpStarImage() {
 		}
 	}
 	// console.log( 'c: ', c.renderProps );
+
+	$( '.warpStarImageCanvas' ).append( c );
 
 	return c;
 

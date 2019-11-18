@@ -4,7 +4,6 @@ var renderParticleArr = function renderParticleArr(context, arr, animation) {
 
     var rendered = 0;
     var notRendered = 0;
-    // console.log( 'rendering loop' );
 
     for (var i = arrLen - 1; i >= 0; i--) {
         var p = thisArr[i];
@@ -14,6 +13,7 @@ var renderParticleArr = function renderParticleArr(context, arr, animation) {
     // notRendered === arrLen ?
     // ( console.log( 'notRendered === 0: stop anim' ), animation.state = false ) : 0;
     notRendered === arrLen ? animation.state = false : 0;
+
 };
 
 module.exports.renderParticleArr = renderParticleArr;

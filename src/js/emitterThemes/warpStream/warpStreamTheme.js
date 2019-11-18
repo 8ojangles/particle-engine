@@ -19,7 +19,7 @@
 
       rate: {
         min: 20,
-        max: 30,
+        max: 40,
 
         decay: {
           rate: 0,
@@ -46,15 +46,15 @@
       },
 
       // are particles offset from inital x/y
-      radialDisplacement: 100,
+      radialDisplacement: 50,
       // is the offset feathered?
       radialDisplacementOffset: 0,
 
       //initial velocity of particles
       impulse: {
         pow: 0,
-        min: 0.25,
-        max: 1.25
+        min: 0.05,
+        max: 0.55
       }
     }
 

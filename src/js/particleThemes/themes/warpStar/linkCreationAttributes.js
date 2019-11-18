@@ -3,6 +3,7 @@ let linkCreationAttributes = [
 		type: 'map',
 		function: 'linear',
 		src: 'velAcceleration',
+		srcValue: 'acceleration',
 		target: 'targetRadius',
 		attr: 'targetRadius'
 	},
@@ -10,6 +11,7 @@ let linkCreationAttributes = [
 		type: 'map',
 		function: 'linear',
 		src: 'velAcceleration',
+		srcValue: 'acceleration',
 		target: 'radius',
 		attr: 'initR'
 	}

@@ -7,33 +7,39 @@ var rgba = coloring.rgba;
 let createWarpStarImage = require('./../../../createWarpStarImage.js');
 let warpStarImage = createWarpStarImage();
 
-renderFn: function renderFn(x, y, r, colorData, context) {
+renderFn: function renderFn(x, y, r, colorData, c ) {
     var p = this;
     let vel = p.relativeMagnitude;
-    let thisR = (r/4) * vel;
+    let thisR = r + ( r * vel ) ;
 
     // var stretchVal = mathUtils.map( p.vel, 0, 200, 1, 400);
-    var stretchVal = (r*20) * vel;
+    var stretchVal = ( r * ( 5 * vel ) ) * vel;
     // var chromeVal = mathUtils.map(stretchVal, 0, 10, 1, 4);
     
     // context.save();
-    context.translate( x, y );
-    context.rotate( p.angle );
+    // c.translate( x, y );
+    // c.rotate( p.angle );
 
-    context.globalAlpha = p.globalAlpha;
+    let spinCos = Math.cos( p.angle );
+    let spinSin = Math.sin( p.angle );
+
+    c.setTransform( spinCos, spinSin, -spinSin, spinCos, x, y );
+
+    c.globalAlpha = p.globalAlpha;
+    // c.globalAlpha = 1;
     let renderProps = warpStarImage.renderProps;
 
-    context.drawImage(
+    c.drawImage(
         warpStarImage,
         0, 0, renderProps.src.w, renderProps.src.h,
         0, -( thisR / 2 ), stretchVal, thisR
     );
 
-    // context.globalAlpha = 1;
+    c.resetTransform();
+    c.globalAlpha = 1;
 
-    context.rotate( -p.angle );
-    context.translate( -x, -y );
-
+    // c.rotate( -p.angle );
+    // c.translate( -x, -y );
 }
 
 module.exports.renderFn = renderFn;
