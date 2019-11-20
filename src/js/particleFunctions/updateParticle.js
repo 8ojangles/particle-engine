@@ -57,27 +57,34 @@ var updateParticle = function updateParticle( emitterArr ) {
                 var paramPath = t.param.path,
                     paramLen = t.param.pathLen;
 
-                paramLen === 1 ? p[paramPath[0]] = easing[t.easing](currLifeTick, t.baseAmount, t.targetAmount, t.duration) : paramLen === 2 ? p[paramPath[0]][paramPath[1]] = easing[t.easing](currLifeTick, t.baseAmount, t.targetAmount, t.duration) : paramLen === 3 ? p[paramPath[0]][paramPath[1]][paramPath[2]] = easing[t.easing](currLifeTick, t.baseAmount, t.targetAmount, t.duration) : false;
+                paramLen === 1 ? 
+                    p[paramPath[ 0 ] ] = easing[ t.easing ]( currLifeTick, t.baseAmount, t.targetAmount, t.duration ) :
+
+                        paramLen === 2 ?
+                            p[ paramPath[ 0 ] ][ paramPath[ 1 ] ] = easing[ t.easing ](currLifeTick, t.baseAmount, t.targetAmount, t.duration ) :
+
+                                paramLen === 3 ? p[ paramPath[ 0 ] ][ paramPath[ 1 ] ][ paramPath[ 2 ] ] = easing[ t.easing ]( currLifeTick, t.baseAmount, t.targetAmount, t.duration ) :
+                                false;
 
                 if (currLifeTick === t.duration) {
                     t.active = false;
 
                     if (t.linkedEvent !== false && typeof t.linkedEvent !== 'undefined') {
 
-                        var particleEvents = p.events;
+                        let particleEvents = p.events;
 
-                        for (var j = particleEvents.length - 1; j >= 0; j--) {
+                        for (let j = particleEvents.length - 1; j >= 0; j--) {
 
-                            var thisParticleEvent = p.events[ j ];
+                            let thisParticleEvent = p.events[ j ];
                             if (thisParticleEvent.eventType = t.linkedEvent) {
                                 if (t.linkedEvent === 'emit') {
 
-                                    var thisParticleEventParams = thisParticleEvent.eventParams;
+                                    let thisParticleEventParams = thisParticleEvent.eventParams;
 
                                     if ( typeof thisParticleEventParams.emitter !== 'undefined' ) {
                                         thisParticleEventParams.emitter.triggerEmitter({ x: p.x, y: p.y });
                                     } else {
-                                        for (var k = emitterArr.length - 1; k >= 0; k--) {
+                                        for (let k = emitterArr.length - 1; k >= 0; k--) {
                                             if (emitterArr[ k ].name === thisParticleEventParams.emitterName) {
                                                 thisParticleEventParams.emitter = emitterArr[ k ];
                                                 thisParticleEventParams.emitter.triggerEmitter({ x: p.x, y: p.y });

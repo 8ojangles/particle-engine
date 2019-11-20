@@ -42,17 +42,18 @@ let canvasCentreH = canW / 2;
 let canvasCentreV = canH / 2;
 
 let blitCanvas = document.createElement('canvas');
-let blitCtx = blitCanvas.getContext("2d");
+let blitCtx = blitCanvas.getContext("2d" );
 blitCanvas.id = 'blitterCanvas';
 blitCanvas.width = canW;
 blitCanvas.height = canH;
 // blitCtx.filter = "blur(1px)";
+blitCanvas.imageSmoothingEnabled = true;
 
 let canvas = document.querySelector("#test-base");
-let ctx = canvas.getContext("2d");
+let ctx = canvas.getContext("2d", { alpha: false } );
 canvas.width = canW;
 canvas.height = canH;
-
+ctx.imageSmoothingEnabled = true;
 
 var canvasConfig = {
     width: canW,
@@ -134,6 +135,11 @@ var currEmmissionType = {
     randomBurst: false,
     steadyStream: true
 };
+
+
+let holeGrad = ctx.createRadialGradient( canvasCentreH, canvasCentreV, 0, canvasCentreH, canvasCentreV, 200 );
+holeGrad.addColorStop( 0, 'rgba( 0, 0, 0, 1 )' );
+holeGrad.addColorStop( 1, 'rgba( 0, 0, 0, 0 )' );
 
 let streamEmmisionLimiter = false;
 
@@ -281,6 +287,7 @@ function displayDebugging() {
     debug.debugOutput(canvas, ctx, 'FPS: ', Math.round(debug.calculateFps()), 3, { min: 0, max: 60 });
 }
 
+
 function updateCycle() {
 
     // if ( currEmmissionType.steadyStream === true ) {
@@ -301,6 +308,8 @@ function updateCycle() {
     // blitCtx.filter = "blur(0px)";
     // blit to onscreen
     ctx.drawImage( blitCanvas, 0, 0 );
+    // ctx.fillStyle = holeGrad;
+    // ctx.fillCircle( canvasCentreH, canvasCentreV, 200 );
 
     // updating
     particleArrFn.updateParticleArr( entityStore, entityPool, animation, canvasConfig, runtimeConfig, emitterStore );

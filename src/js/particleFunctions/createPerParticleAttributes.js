@@ -30,9 +30,9 @@ function createAnimationTracks( arr, ppa ) {
                 targetVal = t.targetAmount;
             }
 
-            var duration = void 0;
-            let life = ppa.lifeSpan;
-            t.duration === 'life' ? duration = life : t.duration < 1 ? duration = life * t.duration : t.duration > 1 ? duration = life : false;
+            var duration = ppa.lifeSpan * t.duration;
+            // let life = ppa.lifeSpan;
+            // t.duration === 'life' ? duration = life : t.duration < 1 ? duration = life * t.duration : t.duration > 1 ? duration = life : false;
 
             animArr.push(
                 { animName: t.animName, active: t.active, param: prmTemp, baseAmount: baseVal, targetAmount: targetVal, duration: duration, easing: t.easing, linkedAnim: t.linkedAnim, linkedEvent: t.linkedEvent }
@@ -160,6 +160,7 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
         yVel: velocities.yVel,
         vAcc: acceleration,
         applyForces: themed.applyGlobalForces,
+        globalAlpha: themed.globalAlpha || 1,
         color4Data: {
             r: color4Data.r, g: color4Data.g, b: color4Data.b, a: color4Data.a
         },

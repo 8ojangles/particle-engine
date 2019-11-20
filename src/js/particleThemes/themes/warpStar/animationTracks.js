@@ -15,7 +15,7 @@ let animationTracks = [
         param: 'globalAlpha',
         baseAmount: 'colorProfiles[0].a',
         targetValuePath: 'colorProfiles[1].a',
-        duration: '0.5',
+        duration: 0.9,
         easing: 'linearEase',
         linkedAnim: false
     }

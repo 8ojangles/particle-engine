@@ -15,6 +15,7 @@ var resetTheme = {
     shrinkRate: 0,
     radialDisplacement: 0,
     radialDisplacementOffset: 0,
+    globalAlpha: 1,
     linkCreationAttributes: [],
     applyGlobalForces: false,
     colorProfiles: [{ r: 0, g: 0, b: 0, a: 0 }],

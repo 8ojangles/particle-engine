@@ -163,8 +163,13 @@ function watch(){
         // You can tell browserSync to use this directory and serve it as a mini-server
         open: false,
         server: {
-            baseDir: "./dist/"
-        }
+            baseDir: "./dist/",
+
+        },
+        port: 4000,
+        ui: {
+    		port: 4001
+  		},
         // If you are already serving your website locally using something like apache
         // You can use the proxy setting to proxy that instead
         // proxy: "yourlocal.dev"

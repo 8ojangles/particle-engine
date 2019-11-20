@@ -30,7 +30,7 @@ function createWarpStarImage() {
 
 	ctx.globalCompositeOperation = 'lighter';
 
-	ctx.filter = "blur( 3px )";
+	ctx.filter = "blur( 1px )";
 
 	ctx.fillStyle = gRed;
 	ctx.fillCircle( cH - cSO, cV, cSR, c );
@@ -43,15 +43,15 @@ function createWarpStarImage() {
 
 
 	// ctx.translate( cH, cV );
-	// ctx.scale( 2, 0.5 );
+	// ctx.scale( 1.25, 0.5 );
 	// let gWhite = ctx.createRadialGradient( 0, 0, 0, 0, 0, cSR );
-	// gWhite.addColorStop( 0, 'rgba( 255, 255, 255, 0.5 )' );
+	// gWhite.addColorStop( 0.3, 'rgba( 255, 255, 255, 0.8 )' );
 	// gWhite.addColorStop( 1, 'rgba( 255, 255, 255, 0 )' );
 
 	// ctx.fillStyle = gWhite;
 	// ctx.fillCircle( 0, 0, cSR, c );
 
-	// ctx.scale( 0.5, 2 );
+	// ctx.scale( 1, 2 );
 	// ctx.translate( -cH, -cV );
 
 	c.renderProps = {

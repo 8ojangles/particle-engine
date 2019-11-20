@@ -18,8 +18,8 @@
     emission: {
 
       rate: {
-        min: 20,
-        max: 40,
+        min: 10,
+        max: 20,
 
         decay: {
           rate: 0,
@@ -30,7 +30,7 @@
       // emission repeater config
       repeater: {
         // what is the repetition rate ( frames )
-        rate: 5,
+        rate: 2,
         // does the repetition rate decay ( get longer )? how much longer? 
         decay: {
           rate: 0,
