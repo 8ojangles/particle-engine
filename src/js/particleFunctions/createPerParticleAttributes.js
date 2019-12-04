@@ -30,13 +30,24 @@ function createAnimationTracks( arr, ppa ) {
                 targetVal = t.targetAmount;
             }
 
-            var duration = ppa.lifeSpan * t.duration;
+            var duration = 60 * t.duration;
             // let life = ppa.lifeSpan;
             // t.duration === 'life' ? duration = life : t.duration < 1 ? duration = life * t.duration : t.duration > 1 ? duration = life : false;
 
-            animArr.push(
-                { animName: t.animName, active: t.active, param: prmTemp, baseAmount: baseVal, targetAmount: targetVal, duration: duration, easing: t.easing, linkedAnim: t.linkedAnim, linkedEvent: t.linkedEvent }
-            );
+            let thisAnim = {
+                animName: t.animName,
+                active: t.active,
+                param: prmTemp,
+                baseAmount: t.baseAmount,
+                targetAmount: t.targetValuePath, 
+                currTick: 0,
+                duration: duration,
+                easing: t.easing,
+                linkedAnim: t.linkedAnim,
+                linkedEvent: t.linkedEvent
+            }
+            // console.log( 'thisAnim: ', thisAnim );
+            animArr.push( thisAnim );
         }
 
         return animArr;
@@ -160,7 +171,9 @@ var createPerParticleAttributes = function createPerParticleAttributes(x, y, emi
         yVel: velocities.yVel,
         vAcc: acceleration,
         applyForces: themed.applyGlobalForces,
-        globalAlpha: themed.globalAlpha || 1,
+        globalAlpha: themed.globalAlpha,
+        globalAlphaInitial: themed.globalAlphaInitial,
+        globalAlphaTarget: themed.globalAlphaTarget,
         color4Data: {
             r: color4Data.r, g: color4Data.g, b: color4Data.b, a: color4Data.a
         },

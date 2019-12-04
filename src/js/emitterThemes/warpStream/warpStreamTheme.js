@@ -18,8 +18,8 @@
     emission: {
 
       rate: {
-        min: 10,
-        max: 20,
+        min: 4,
+        max: 10,
 
         decay: {
           rate: 0,
@@ -46,7 +46,7 @@
       },
 
       // are particles offset from inital x/y
-      radialDisplacement: 50,
+      radialDisplacement: 20,
       // is the offset feathered?
       radialDisplacementOffset: 0,
 
@@ -54,7 +54,7 @@
       impulse: {
         pow: 0,
         min: 0.05,
-        max: 0.55
+        max: 0.15
       }
     }
 

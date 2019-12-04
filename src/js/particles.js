@@ -108,8 +108,11 @@ for (var i = 0; i < entityPopulation; i++) {
     // pInstance.idx = i;
     // console.log( "pInstance.idx '%d'", pInstance.idx )
     entityStore.push(createLiveParticle(0, 0, i, baseEmitterTheme, themes.reset));
+    // console.log( 'initial particle: ', entityStore[ i ] );
     entityPool.insert('' + i);
 }
+
+// console.log( 'initial particle: ', entityStore[ 9997 ] );
 
 // global counter
 var globalClock = 0;
@@ -168,18 +171,34 @@ function registerMouseClickEmmision() {
     });
 }
 
+
+function registerMouseMove( event ) {
+        mouseX = event.offsetX;
+        mouseY = event.offsetY;
+};
+
+document.addEventListener('mousemove', registerMouseMove);
+
 if (currEmmissionType.mouseClickEvent) {
     registerMouseClickEmmision();
 }
 
 if (currEmmissionType.steadyStream) {
+
     var testEmitter = new EmitterEntity('testEmitter', currEmitterTheme, currTheme, emitEntities);
     emitterStore.push(testEmitter);
+
     testEmitter.triggerEmitter({
         x: canvasConfig.centerH,
         y: canvasConfig.centerV
     });
 
+    // testEmitter.triggerEmitter({
+    //     x: mouseX,
+    //     y: mouseY
+    // });
+
+    // console.log( 'emitterStore[ 9997 ]', emitterStore[ 9997] );
     if (animation.state !== true) {
         animation.state = true;
         update();
@@ -219,6 +238,9 @@ function setParticleAttributes(p, ppa) {
     p.magnitudeDecay = ppa.magnitudeDecay;
     p.entityType = 'none';
     p.applyForces = ppa.applyForces;
+    p.globalAlpha = ppa.globalAlpha;
+    p.globalAlphaInitial = ppa.globalAlphaInitial;
+    p.globalAlphaTarget = ppa.globalAlphaTarget;
     p.color4Data = ppa.color4Data;
     p.colorProfiles = ppa.colorProfiles;
     p.killConditions = ppa.killConditions;

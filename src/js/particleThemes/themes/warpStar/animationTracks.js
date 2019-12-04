@@ -13,10 +13,10 @@ let animationTracks = [
         animName: 'fadeIn',
         active: true,
         param: 'globalAlpha',
-        baseAmount: 'colorProfiles[0].a',
-        targetValuePath: 'colorProfiles[1].a',
-        duration: 0.9,
-        easing: 'linearEase',
+        baseAmount: 0,
+        targetValuePath: 1,
+        duration: 4,
+        easing: 'easeInCubic',
         linkedAnim: false
     }
 ]
